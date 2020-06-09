@@ -1,13 +1,9 @@
 package by.epamtc.taskepam01_01.task_04;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-
 import static java.lang.Math.pow;
 
 public class Task4 {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         double fX;
         double x = 10;
 

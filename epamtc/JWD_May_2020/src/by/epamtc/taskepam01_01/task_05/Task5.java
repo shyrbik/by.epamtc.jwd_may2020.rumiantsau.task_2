@@ -1,11 +1,8 @@
 package by.epamtc.taskepam01_01.task_05;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 
 public class Task5 {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         int hundreds;
         int dozens;
         int units;
