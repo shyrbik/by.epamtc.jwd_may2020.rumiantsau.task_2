@@ -4,12 +4,31 @@ public class Task02 {
     public static void main(String[] args) {
         String enteredString = "  q qq qqaaaqq QQqqqqq  dfebbbbfeFEf fefefaaaaaaaefefefefef feefbbbbefefef fe aaa";
         String[] massiveWords = removeExtraSpaces(enteredString).split(" ");
-
-//        String evenCharsOfString; // строка для четных символов
-//        String oddCharsOfString; // стркоа для нечетных символов
+        String firstBigNumber = "1111111111111111112222222222222222222999999999999996666666666666666333333333333";
+        String secondBigNumber = "222222222999999999999996666666666666666333333333333";
         char charForTest = 'd';
 
+        //Сложение очень длинных целых чисел
+        System.out.println("Sum = " + addBigNumbersInString(firstBigNumber, secondBigNumber));
 
+        //Частота встречаемости символа в строке
+        System.out.println("Char Frequency of " + charForTest + " = " + calcCharFrequency(enteredString, charForTest));
+
+        //Удаление последнего слова в строке
+        System.out.println("Entered String Without Last Word" + "\n" + deleteLastWord(enteredString));
+
+        //Является ли строка палиндром? + Переворот строки
+        System.out.println("Does the Entered String a Palindrome?" + " Answer: " +
+                checkStringPolindrome("А роза упала на лапу Азора"));
+
+        //Удаление из строки слов заданной длины
+        System.out.println("Result after deletion words with given length:" + "\n" +
+                deleteWordWithLength(massiveWords, 8));
+
+        //Замена подстроки в строке  "aaaqq qqqq" на "$$$$$$$$$$$$"
+
+        System.out.println("String After Replacement SubString:" + "\n" +
+                replaceSubString(enteredString, "aaaqq qqqq", "$$$$$$$$$$$$"));
 
         //Удаление одинаковых символов
         System.out.println("Unique String Characters: " + "\n" +  findUniqChars(enteredString));
@@ -28,10 +47,7 @@ public class Task02 {
         System.out.println("Min Length Word" + getMinLengthWord(massiveWords));
 
         //Четные и нечетные символы разделить по разным строкам
-        printSeparateEvenOddChar(enteredString);
-
-       //Частота встречаемости символа в строке
-        System.out.println("Char Frequency of " + charForTest + " = " + calcCharFrequency(enteredString, charForTest));
+        printEvenOddChar(enteredString);
 
         //Заменить пробел и группы пробелов символом "*"
         System.out.println(enteredString.replace(" ", "*"));
@@ -53,67 +69,61 @@ public class Task02 {
         //Добавление пробелов в строку
         System.out.println("Add Spaces In Entered String:" + enteredString.concat("     "));
 
-        //Удаление последнего слова в строке
-        System.out.println("Entered String Without Last Word" + "\n" + deleteLastWord(enteredString));
-
-        //Является ли строка палиндром? + Переворот строки
-        System.out.println("Does the Entered String a Palindrome?" + " Answer: " +
-                checkStringPolindrome("А роза упала на лапу Азора"));
-
-        //Удаление из строки слов заданной длины
-        System.out.println("Result after deletion words with given length:" + "\n" +
-                deleteWordWithLength(massiveWords, 8));
-
-       //Замена подстроки в строке  "aaaqq qqqq" на "$$$$$$$$$$$$"
-
-        System.out.println("String After Replacement SubString:" + "\n" +
-                replaceSubString(enteredString, "aaaqq qqqq", "$$$$$$$$$$$$"));
-
-
-
-        //Поменять слова местами, допустим 2 и 3 слово
+        //Поменять слова местами, допустим слова с индексами 2 и 3
         System.out.println("String After Swap Words" + "\n" +
                 swapWord(massiveWords, 2, 3));
-
 
         //Копирование части строки
         System.out.println("Copy Part Of Entered String" + "\n" +
                 copyPartOfString(enteredString, 5, 10));
 
-
         //Процентное соотношение строчных и прописных букв
-
         printPercentUpperLowCaseChars(enteredString);
 
+    }
 
-//        вот это подумать через преобразование чисел и стрингбаффер с аппендом по разрядам
-//        Сложение очень длинных целых чисел
+    private static String addBigNumbersInString(String firstBigNumber, String secondBigNumber) {
+        StringBuilder firstNumber = new StringBuilder();
+        StringBuilder secondNumber = new StringBuilder();
+        StringBuilder result = new StringBuilder();
+        int length = 0;
+        int stringToLInt = 0;
+        int dozen = 0; // перенос единицы на следующий разряд
 
+        length = Math.abs(firstBigNumber.length() - secondBigNumber.length());
 
+        //добавляем нули в строку на отсутсвующие разряды
+        if (firstBigNumber.length() > secondBigNumber.length()) {
+            for (int i = 0; i < length; i++) {
+                secondNumber.append(0);
+            }
+        }
+        else if (firstBigNumber.length() < secondBigNumber.length()){
+            for (int i = 0; i < length; i++) {
+                firstNumber.append(0);
+            }
+        }
 
-/*
+        secondNumber.append(secondBigNumber);
+        firstNumber.append(firstBigNumber);
+        length = firstNumber.length()-1;
 
-
-
-
-
-Количество вхождений подстроки в строку
-
-
-
-
-
-
-
-
-
-
-*/
-
-
-
-
-
+        while (length > 0){
+            //преобразуем символы char в int и вычисляем результат сложения
+            stringToLInt = Character.digit(firstNumber.charAt(length), 10) +
+                    Character.digit(secondNumber.charAt(length), 10)
+                    +dozen;
+            //проверка, будет ли прибавляться единица при следующей итерации
+            if (stringToLInt > 10) {
+                dozen = 1;
+                stringToLInt %= 10;
+            }
+            else dozen = 0;
+            result.append(stringToLInt);
+            length--;
+        }
+        //переворачиваем получившийся результат через реверс
+        return result.reverse().toString();
     }
 
     private static void printPercentUpperLowCaseChars(String enteredString) {
@@ -126,8 +136,6 @@ public class Task02 {
                 upperCaseChars++;
             else
                 lowCaseChars++;
-            System.out.println("!!!!!" + upperCaseChars);
-            System.out.println("!!!!!" + lowCaseChars);
         }
         System.out.println("Percent Of Upper Case Chars: "
                 + upperCaseChars/(upperCaseChars + lowCaseChars) * 100 +"%");
@@ -264,18 +272,18 @@ public class Task02 {
         return charFrequencyInString;
     }
 
-    private static void printSeparateEvenOddChar(String enteredString) {
-        StringBuilder evenCharacters = new StringBuilder(); //четные символы в строке
-        StringBuilder oddCharacters  = new StringBuilder(); //нечетные символы в строке
+    private static void printEvenOddChar(String enteredString) {
+        StringBuilder evenChars = new StringBuilder(); //четные символы в строке
+        StringBuilder oddChars = new StringBuilder(); //нечетные символы в строке
         for (int i = 0; i < enteredString.length(); i++) {
             if (i % 2 == 0){
-                evenCharacters.append(enteredString.charAt(i));
+                evenChars.append(enteredString.charAt(i));
             }
             else
-                oddCharacters.append(enteredString.charAt(i));
+                oddChars.append(enteredString.charAt(i));
         }
-        System.out.println("Еven Characters:" + evenCharacters); //четные
-        System.out.println("Odd Characters:" + evenCharacters); //нечетные
+        System.out.println("Еven Characters:" + evenChars); //четные
+        System.out.println("Odd Characters:" + oddChars); //нечетные
     }
 
     private static void printWordsInReverseOrder(String enteredString, String[] massiveWords) {
