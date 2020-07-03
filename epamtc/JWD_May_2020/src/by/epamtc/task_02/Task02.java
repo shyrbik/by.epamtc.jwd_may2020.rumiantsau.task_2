@@ -1,4 +1,4 @@
-package by.epamtc.task_02;
+package by.epamtc.rumiantsau.task_02;
 
 public class Task02 {
     public static void main(String[] args) {
@@ -35,16 +35,16 @@ public class Task02 {
 
         //Заменить в самом длинном слове строки буквы 'a' на 'b'
         System.out.println("Replace 'a' om 'b' In Word With Max Length" + "\n"
-                +getMaxLengthWord(massiveWords).replace('a', 'b'));
+                +maxLengthWord(massiveWords).replace('a', 'b'));
 
         //Удаление лишних пробелов
         System.out.println("Entered String Without Extra Spaces: " + "\n" +  removeExtraSpaces(enteredString));
 
         //Определить длину самого длинного слова в строке
-        System.out.println("Max Length Word" + getMaxLengthWord(massiveWords));
+        System.out.println("Max Length Word" + maxLengthWord(massiveWords));
 
         //Определить длину самого короткого слова в строке
-        System.out.println("Min Length Word" + getMinLengthWord(massiveWords));
+        System.out.println("Min Length Word" + minLengthWord(massiveWords));
 
         //Четные и нечетные символы разделить по разным строкам
         printEvenOddChar(enteredString);
@@ -129,13 +129,16 @@ public class Task02 {
     private static void printPercentUpperLowCaseChars(String enteredString) {
         double upperCaseChars = 0;
         double lowCaseChars = 0;
+		
         String stringWithoutSpaces = enteredString.replaceAll(" ", "");
         System.out.println(stringWithoutSpaces);
         for (int j = 0; j < stringWithoutSpaces.length(); j++) {
-            if (Character.isUpperCase(stringWithoutSpaces.charAt(j)))
-                upperCaseChars++;
-            else
-                lowCaseChars++;
+            if (Character.isUpperCase(stringWithoutSpaces.charAt(j))){
+			upperCaseChars++;
+			}
+            else{
+			lowCaseChars++;
+			}
         }
         System.out.println("Percent Of Upper Case Chars: "
                 + upperCaseChars/(upperCaseChars + lowCaseChars) * 100 +"%");
@@ -149,6 +152,7 @@ public class Task02 {
         StringBuilder stringWithoutSpaces = new StringBuilder
                 (enteredString.replaceAll(" ", "").toLowerCase());
         int i = 0;
+		
         do{
             uniqChars.append(stringWithoutSpaces.charAt(0));
             stringWithoutSpaces = new StringBuilder(stringWithoutSpaces.toString()
@@ -173,24 +177,30 @@ public class Task02 {
         StringBuilder stringAfterSwap = new StringBuilder();
 
         for (int i = 0; i < massiveWords.length; i++) {
-            if (i == indexFirstWord)
-                stringAfterSwap.append(massiveWords[indexSecondWord]);
-            else if (i == indexSecondWord)
-                stringAfterSwap.append(massiveWords[indexFirstWord]);
-            else
-                stringAfterSwap.append(massiveWords[i]);
-            if (i != massiveWords.length-1)
+            if (i == indexFirstWord){
+			stringAfterSwap.append(massiveWords[indexSecondWord]);
+			}
+            else if (i == indexSecondWord){
+			stringAfterSwap.append(massiveWords[indexFirstWord]);
+			}
+            else{
+			stringAfterSwap.append(massiveWords[i]);
+			}
+            if (i != massiveWords.length-1){
             stringAfterSwap.append(' ');
+			}
         }
 
         return stringAfterSwap.toString();
     }
 
     private static String replaceSubString(String enteredString, String subStringForReplace, String replacementForSubString) {
-        if (enteredString.contains(subStringForReplace))
+        if (enteredString.contains(subStringForReplace)){
         return enteredString.replace(subStringForReplace, replacementForSubString);
-        else
-            return "Couldnt Found SubStringForReplace In EnteredString";
+		}
+        else{
+		return "Couldnt Found SubStringForReplace In EnteredString";
+		}
     }
 
     private static String removeExtraSpaces(String enteredString) {
@@ -216,7 +226,7 @@ public class Task02 {
 
     }
 
-    private static String getMinLengthWord(String[] massiveWords) {
+    private static String minLengthWord(String[] massiveWords) {
         int minIndexCharsInWord = 0;
         for (int i = 0, min = Integer.MAX_VALUE; i < massiveWords.length; i++) {
             if (massiveWords[i].length() < min){
@@ -227,8 +237,9 @@ public class Task02 {
       return massiveWords[minIndexCharsInWord];
     }
 
-    private static String getMaxLengthWord(String[] massiveWords) {
+    private static String maxLengthWord(String[] massiveWords) {
         int maxIndexCharsInWord = 0;
+		
         for (int i = 0, max = 0; i < massiveWords.length; i++) {
             if (massiveWords[i].length() > max){
                 max = massiveWords[i].length();
@@ -265,16 +276,19 @@ public class Task02 {
 
     private static int calcCharFrequency(String enteredString, char inputChar) {
         int charFrequencyInString = 0;
+		
         for (int i = 0; i < enteredString.length(); i++) {
             if (enteredString.charAt(i) == inputChar){
                 charFrequencyInString++;  }
         }
+		
         return charFrequencyInString;
     }
 
     private static void printEvenOddChar(String enteredString) {
         StringBuilder evenChars = new StringBuilder(); //четные символы в строке
         StringBuilder oddChars = new StringBuilder(); //нечетные символы в строке
+		
         for (int i = 0; i < enteredString.length(); i++) {
             if (i % 2 == 0){
                 evenChars.append(enteredString.charAt(i));
